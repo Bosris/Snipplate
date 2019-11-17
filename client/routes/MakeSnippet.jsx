@@ -18,8 +18,10 @@ const MakeSnippet = (props) => {
   const [description, setDescription] = useState("");
 
   const handleSubmit = (e) => {
-    const code = {codeValue, description}
-    const snippets = [{tech, code}]
+    const snipplates = [{codeValue, description}]
+
+    // const code = {codeValue, description}
+    const snippets = [{tech, snipplates}]
     e.preventDefault();
     axios.post('/api/snippet', {
       snippets

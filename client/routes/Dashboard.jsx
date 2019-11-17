@@ -8,7 +8,9 @@ const Dashboard = (props) => {
  }
 
  const handleTechClick = (e) => {
-  console.log(e.target.getAttribute("data-id"))
+  let chosenSnippet = e.target.getAttribute("data-id");
+  props.getCurrentSnippet(chosenSnippet)
+  history.push(`/snippet/${chosenSnippet}`)
  }
 
   return (
