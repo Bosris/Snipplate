@@ -4,5 +4,10 @@ module.exports = {
     '@babel/preset-react',
 
   ],
-  plugins: ['@babel/transform-runtime']
+  plugins: ['@babel/transform-runtime',  ["prismjs", {
+    "languages": ["javascript", "css", "html"],
+    "plugins": ["line-numbers", "show-language"],
+    "theme": "okaidia",
+    "css": true
+  }]]
 };

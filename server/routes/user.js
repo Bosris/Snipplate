@@ -65,4 +65,24 @@ router.post('/logout', (req, res) => {
     }
 })
 
+router.post('/snippet', (req, res) => {
+    console.log('made it here')
+
+    console.log(req.user._id)
+    console.log(req.body.snippets[0])
+
+    User.update({_id: req.user._id }, { $push: {snippets: req.body.snippets} }, (err, result) => {
+        if (err) return res.status(400).json(err);
+        res.status(200).json(result)
+    })
+})
+
+router.get('/user', (req, res) => {
+    User.findOne({_id: req.user._id}, {"password": 0 }, (err, docs) => {
+        if (err) return res.status(400).json(err);
+
+        res.status(200).json(docs)
+    })
+})
+
 module.exports = router

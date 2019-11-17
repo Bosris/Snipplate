@@ -7,17 +7,19 @@ const Dashboard = (props) => {
   history.push('/snippet')
  }
 
+ const handleTechClick = (e) => {
+  console.log(e.target.getAttribute("data-id"))
+ }
+
   return (
   <>
     <Navbar handleLogout={props.handleLogout} authed={props.authed} />
       <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
       <h1>Dashboard</h1>
-      <div style={{display: 'flex', }}>
-      <h4>React</h4>
-      <h4>React</h4>
-      <h4>React</h4>
-      <h4>React</h4>
-      <h4>React</h4>
+      <div style={styles.techDiv}>
+      {props.snippets.map( (ele, index) =>
+        <h4 onClick={handleTechClick} data-id={index} key={index}>{ele.tech}</h4>
+      )}
       </div>
     </div>
     <div style={{display: 'flex', justifyContent:'center'}}>
@@ -40,6 +42,12 @@ const styles = {
     marginTop: '10px',
     borderRadius: '20px'
   },
+  techDiv: {
+    display: 'flex',
+    justifyContent: 'space-evenly',
+    width: '80%',
+    flexWrap: 'wrap'
+  }
 }
 
 export default Dashboard

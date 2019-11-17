@@ -21,7 +21,7 @@ class App extends React.Component {
     this.state = {
       authed: false,
       username: null,
-      snippets: {}
+      snippets: []
     }
     this.handleAuth = this.handleAuth.bind(this)
     this.handleLogout = this.handleLogout.bind(this)
@@ -35,14 +35,21 @@ class App extends React.Component {
   getUser(){
     axios.get('/api/')
     .then(res => {
+      console.log(res)
       console.log('testing res.data', res.data.user)
       if(res.data.user){
         this.setState({
           authed: true
         })
       }
-    })
+    }).then(() => this.getUserData())
+  }
 
+  getUserData(){
+    axios.get('/api/user')
+    .then(res => {
+      this.setState({snippets: res.data.snippets})
+    })
   }
 
 
@@ -60,7 +67,7 @@ class App extends React.Component {
         return this.setState({authed: false})
       }).then(res => {
         history.push("/login")
-        console.log(history)
+
       })
 
   }
@@ -79,10 +86,10 @@ class App extends React.Component {
           exact path='/login'
           render={(props) => (<Login {...props } handleAuth={this.handleAuth} authed={this.state.authed} /> )}
           />
-          <DecisionRoute path='/' exact={true}
+          <DecisionRoute path='/' snippets={this.state.snippets} exact={true}
           authed={this.state.authed} handleLogout={this.handleLogout} component={Dashboard}/>
 
-          <DecisionRoute path='/snippet' exact={true}
+          <DecisionRoute path='/snippet' snippets={this.state.snippets} exact={true}
           authed={this.state.authed} component={MakeSnippet}/>
         </Switch>
     )
