@@ -20,8 +20,11 @@ const Login = (props) => {
       email, password
     }).then(res => {
       console.log(res)
-      // props.handleAuth()
-      // props.history.push('/')
+      if(res.status === 200){
+        props.handleAuth()
+        props.history.push('/')
+      }
+
     })
       .catch(err => setErr('Wrong Username or Password'))
 
@@ -29,7 +32,7 @@ const Login = (props) => {
 
   return (
   <>
-    <Navbar />
+    <Navbar authed={props.authed} />
     <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center'}}>
     <h1>Login</h1>
     {err.length > 0 ? <p>{err}</p> : ""}

@@ -19,8 +19,8 @@ const Signup = (props) => {
     axios.post('/api/signup', {
       email, password
     }).then(res => {
-      props.handleAuth()
-      props.history.push('/')
+      // props.handleAuth()
+      props.history.push('/login')
     })
       .catch(err => setErr('Email Already Exists'))
 
@@ -28,7 +28,7 @@ const Signup = (props) => {
 
   return (
   <>
-    <Navbar />
+    <Navbar authed={props.authed}  />
     <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center'}}>
     <h1>Sign up</h1>
     {err.length > 0 ? <p>{err}</p> : ""}

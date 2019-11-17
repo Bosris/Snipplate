@@ -8,17 +8,16 @@ import {
 } from "react-router-dom";
 
 
-const DecisionRoute = ({component: Component, authed, ...rest}) => {
+const DecisionRoute = ({component: Component, authed, handleLogout, ...rest}) => {
+  console.log(rest)
   return (
 <Route
       {...rest}
       render={(props) => authed === true
-        ? <Component {...props} />
+        ? <Component handleLogout={handleLogout} authed={authed} {...props} />
         : <Redirect to='/' />}
     />
   )
 }
 
 export default DecisionRoute
-
-{/* <Redirect to={{pathname: '/login', state: {from: props.location}}} */}
