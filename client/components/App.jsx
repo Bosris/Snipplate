@@ -28,6 +28,7 @@ class App extends React.Component {
     this.handleAuth = this.handleAuth.bind(this)
     this.handleLogout = this.handleLogout.bind(this)
     this.getCurrentSnippet = this.getCurrentSnippet.bind(this)
+    this.getUser = this.getUser.bind(this)
   }
 
 
@@ -87,24 +88,24 @@ class App extends React.Component {
   render(){
     return(
         <Switch>
-        {this.state.authed === false ? <Redirect exact from='/' to='/login' /> : <Redirect exact from='/login' to='/' />}
           <Route
           exact path='/signup'
           render={(props) => (<Signup {...props } handleAuth={this.handleAuth} authed={this.state.authed} /> )}
           />
           <Route
           exact path='/login'
-          render={(props) => (<Login {...props } handleAuth={this.handleAuth} authed={this.state.authed} /> )}
+          render={(props) => (<Login {...props } getUser={this.getUser} handleAuth={this.handleAuth} authed={this.state.authed} /> )}
           />
           <DecisionRoute path='/' snippets={this.state.snippets} exact={true}
-          authed={this.state.authed} getCurrentSnippet={this.getCurrentSnippet} currentSnippet={this.state.currentSnippet} handleLogout={this.handleLogout} component={Dashboard}/>
+          authed={this.state.authed} getCurrentSnippet={this.getCurrentSnippet}
+          currentSnippet={this.state.currentSnippet} handleLogout={this.handleLogout}  getUserData={this.getUserData} component={Dashboard}/>
 
           <DecisionRoute path='/snippet' snippets={this.state.snippets} exact={true}
-          authed={this.state.authed} component={MakeSnippet}/>
+          authed={this.state.authed} handleLogout={this.handleLogout} component={MakeSnippet}/>
 
-          <DecisionRoute path='/snippet/0' snippets={this.state.snippets}
-          authed={this.state.authed} getCurrentSnippet={this.getCurrentSnippet} currentSnippet={this.state.currentSnippet} component={SnippetView}/>
-
+          <DecisionRoute path='/snippet/:id' snippets={this.state.snippets}
+          authed={this.state.authed} handleLogout={this.handleLogout} getCurrentSnippet={this.getCurrentSnippet} currentSnippet={this.state.currentSnippet} component={SnippetView}/>
+        {this.state.authed === false ? <Redirect exact from='*' to='/login' /> : <Redirect exact from='/login' to='/' />}
         </Switch>
     )
   }

@@ -22,6 +22,7 @@ const Login = (props) => {
       console.log(res)
       if(res.status === 200){
         props.handleAuth()
+        props.getUser();
         props.history.push('/')
       }
 

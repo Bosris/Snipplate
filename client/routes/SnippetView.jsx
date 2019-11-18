@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Navbar from '../components/Navbar.jsx'
 import Highlight from 'react-highlight'
 import Editor from 'react-simple-code-editor';
@@ -12,19 +12,46 @@ import history from '../history.jsx'
 import {
   useParams
 } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import {TrashSpan} from './styles.js'
 
 
 const SnippetView = (props) => {
   const { id } = useParams();
-  console.log(id)
+
+
+  const handleDelete = (e, ele, index) => {
+    let deleteSnippet = props.snippets[id].snipplates.splice([index], 1);
+
+    let {snipplates} = props.snippets[id]
+
+    // console.log(description)
+    axios.delete(`/api/snippet/${id}`, {data: {
+      snipplates
+      }
+    })
+  }
+
   return (
   <>
     <Navbar handleLogout={props.handleLogout} authed={props.authed} />
     <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center'}}>
     <h1>{props.currentSnippet.tech}</h1>
-    {props.currentSnippet.snipplates.map(ele =>
-    <>
-      <h4>{ele.description}</h4>
+    <div style={styles.techContainer}>
+
+    {props.currentSnippet.snipplates.map( (ele, index) =>
+
+    <div style={{boxShadow: '0 -2px 10px rgba(0, 0, 0, 1)', marginBottom: '20px'}}>
+    <h4 style={{textAlign: 'center'}}>
+      <span style={{paddingRight: '20px'}}>
+        {ele.description}
+      </span>
+      <TrashSpan onClick={(e) => handleDelete(e, ele, index)}>
+        <FontAwesomeIcon icon={faTrash}/>
+      </TrashSpan>
+    </h4>
+
        <CodeMirror
        value={ele.codeValue}
        options={{
@@ -35,9 +62,9 @@ const SnippetView = (props) => {
        onChange={(editor, data, value) => {
        }}
         />
-      </>
+      </div>
     )}
-
+      </div>
     </div>
   </>
   )
@@ -61,6 +88,17 @@ const styles = {
     marginTop: '10px',
     borderRadius: '20px'
   },
+  techContainer: {
+    display: 'flex',
+    width: '40%',
+    flexDirection: 'column'
+  },
+  trashBtn: {
+    paddingLeft: '20px',
+    "&:hover":{
+      backgroundColor: 'red'
+    }
+  }
 }
 
 

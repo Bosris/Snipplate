@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Navbar from '../components/Navbar.jsx'
 import Highlight from 'react-highlight'
 import Editor from 'react-simple-code-editor';
@@ -12,24 +12,58 @@ import history from '../history.jsx'
 
 
 
+
 const MakeSnippet = (props) => {
   const [codeValue, setCodeValue] = useState("")
   const [tech, setTech] = useState("")
   const [description, setDescription] = useState("");
+  const [snippetNames, setSnippetNames] = useState([]);
+  const [typeOfSnippet, setTypeOfSnippet] = useState("update");
+  const [whichToUpdate, setWhichToUpdate] = useState("");
+
+  useEffect(() => {
+    if(props.snippets.length) {
+      props.snippets.forEach(ele => {
+        console.log(ele.tech)
+        setSnippetNames(prevState => [...prevState, ele.tech])
+      })
+      setWhichToUpdate(props.snippets[0].tech)
+    }
+
+  }, [])
+
+  const handleTypeOfSnippet = (e) => {
+    setTypeOfSnippet(e.target.value)
+  }
+  const handleWhichToUpdate = (e) => {
+    setWhichToUpdate(e.target.value)
+  }
 
   const handleSubmit = (e) => {
-    const snipplates = [{codeValue, description}]
-
-    // const code = {codeValue, description}
-    const snippets = [{tech, snipplates}]
     e.preventDefault();
-    axios.post('/api/snippet', {
-      snippets
-    }).then(res => {
-      if(res.status === 200){
-        history.push('/')
-      }
-    })
+    if(typeOfSnippet === "new"){
+      let snipplates = [{codeValue, description}]
+      let snippets = [{tech, snipplates}]
+      axios.post('/api/snippet', {
+        snippets
+      }).then(res => {
+        if(res.status === 200){
+          history.push('/')
+        }
+      })
+    }
+
+    if(typeOfSnippet === "update"){
+      let snipplates = [{codeValue, description}]
+      let snippets = [{tech, snipplates}]
+      console.log(snippets)
+      axios.put('/api/snippet', {
+        snippets, whichToUpdate
+      })
+
+
+    }
+
   }
 
   return (
@@ -38,8 +72,27 @@ const MakeSnippet = (props) => {
     <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center'}}>
     <h1>Create a Snipplate</h1>
       <form onSubmit={handleSubmit} style={styles.form}>
-        <label for="tech">Language of snippet: </label>
-        <input value={tech} onChange={(e) => setTech(e.target.value)} name="tech" type="text"/>
+        <label>Update a Snipplate or Add New?</label>
+        <select onChange={handleTypeOfSnippet}>
+          <option value="update" name="update" selected>Update</option>
+          <option value="new" name="new">New</option>
+        </select>
+{ typeOfSnippet === "new" ?
+      <div>
+       <label for="tech">Language of snippet: </label>
+       <input value={tech} onChange={(e) => setTech(e.target.value)} name="tech" type="text"/>
+      </div>
+    :
+      <div>
+        <label>Select Which you want to update: </label>
+        <select onChange={handleWhichToUpdate}>
+          {snippetNames.map(ele =>
+            <option value={ele}>{ele}</option>
+          )}
+        </select>
+      </div>
+}
+
         <label>Code Here:</label>
         <CodeMirror
             value={codeValue}

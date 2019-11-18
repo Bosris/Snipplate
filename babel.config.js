@@ -4,7 +4,7 @@ module.exports = {
     '@babel/preset-react',
 
   ],
-  plugins: ['@babel/transform-runtime',  ["prismjs", {
+  plugins: ['@babel/transform-runtime', 'babel-plugin-styled-components', ["prismjs", {
     "languages": ["javascript", "css", "html"],
     "plugins": ["line-numbers", "show-language"],
     "theme": "okaidia",

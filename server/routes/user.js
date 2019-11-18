@@ -85,4 +85,35 @@ router.get('/user', (req, res) => {
     })
 })
 
+router.put('/snippet', (req, res) => {
+    User.update({_id: req.user._id, "snippets.tech": req.body.whichToUpdate}, {$push: {"snippets.$.snipplates": req.body.snippets[0].snipplates[0]}}, (err, docs) => {
+        if(err){
+            console.log(err)
+        } else{
+            console.log(docs)
+        }
+
+    })
+})
+
+router.delete('/snippet/:id', (req,res ) => {
+    const { id } = req.params
+    const {snipplates} = req.body
+    console.log(req.body)
+
+        User.update({_id: req.user._id}, {$set :{ ["snippets." + id + ".snipplates"]: snipplates}}, (err, docs) => {
+        if(err){
+            console.log(err)
+        } else{
+            console.log(docs)
+        }
+
+    })
+    console.log(req.params);
+})
+
 module.exports = router
+
+// ["snippets."+ id + ".snipplates.description"]: description
+
+

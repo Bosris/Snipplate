@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect } from 'react';
+
 import Navbar from '../components/Navbar.jsx'
 import history from '../history.jsx'
 
@@ -6,6 +7,9 @@ const Dashboard = (props) => {
  const handleSnippet = () => {
   history.push('/snippet')
  }
+ useEffect(() => {
+
+ }, [])
 
  const handleTechClick = (e) => {
   let chosenSnippet = e.target.getAttribute("data-id");
