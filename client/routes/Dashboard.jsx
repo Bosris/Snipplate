@@ -2,6 +2,7 @@ import React, {useEffect } from 'react';
 
 import Navbar from '../components/Navbar.jsx'
 import history from '../history.jsx'
+import { TechHeader } from './styles.js'
 
 const Dashboard = (props) => {
  const handleSnippet = () => {
@@ -24,13 +25,14 @@ const Dashboard = (props) => {
       <h1>Dashboard</h1>
       <div style={styles.techDiv}>
       {props.snippets.map( (ele, index) =>
-        <h4 onClick={handleTechClick} data-id={index} key={index}>{ele.tech}</h4>
+        <TechHeader onClick={handleTechClick} data-id={index} key={index}>{ele.tech}</TechHeader>
       )}
       </div>
+      <div style={{display: 'flex', justifyContent:'center'}}>
+      <button onClick={handleSnippet} style={styles.button}>Add Snippet</button>
+      </div>
     </div>
-    <div style={{display: 'flex', justifyContent:'center'}}>
-    <button onClick={handleSnippet} style={styles.button}>Add Snippet</button>
-    </div>
+
   </>
   )
 };

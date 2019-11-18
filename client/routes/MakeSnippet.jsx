@@ -39,7 +39,7 @@ const MakeSnippet = (props) => {
     setWhichToUpdate(e.target.value)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     if(typeOfSnippet === "new"){
       let snipplates = [{codeValue, description}]
@@ -48,9 +48,9 @@ const MakeSnippet = (props) => {
         snippets
       }).then(res => {
         if(res.status === 200){
-          history.push('/')
+         props.getUserData()
         }
-      })
+      }).then(() =>  history.push('/'))
     }
 
     if(typeOfSnippet === "update"){
@@ -59,6 +59,11 @@ const MakeSnippet = (props) => {
       console.log(snippets)
       axios.put('/api/snippet', {
         snippets, whichToUpdate
+      }).then(res => {
+        if(res.status === 200){
+          props.getUserData()
+          history.push('/')
+        }
       })
 
 

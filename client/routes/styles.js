@@ -9,6 +9,15 @@ export const TrashSpan = styled.span`
   }`
 
 
+export const TechHeader = styled.h4`
+font-size: 20px;
+&:hover{
+  color: lightblue;
+  cursor: pointer;
+}`
+
+
+
   // color: white;
   // border: none;
   // padding: 0;

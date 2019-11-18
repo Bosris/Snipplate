@@ -29,6 +29,7 @@ class App extends React.Component {
     this.handleLogout = this.handleLogout.bind(this)
     this.getCurrentSnippet = this.getCurrentSnippet.bind(this)
     this.getUser = this.getUser.bind(this)
+    this.getUserData = this.getUserData.bind(this)
   }
 
 
@@ -87,7 +88,9 @@ class App extends React.Component {
 
   render(){
     return(
+
         <Switch>
+           {this.state.authed === false ? <Redirect exact from='/' to='/login' /> : <Redirect exact from='/login' to='/' />}
           <Route
           exact path='/signup'
           render={(props) => (<Signup {...props } handleAuth={this.handleAuth} authed={this.state.authed} /> )}
@@ -100,7 +103,7 @@ class App extends React.Component {
           authed={this.state.authed} getCurrentSnippet={this.getCurrentSnippet}
           currentSnippet={this.state.currentSnippet} handleLogout={this.handleLogout}  getUserData={this.getUserData} component={Dashboard}/>
 
-          <DecisionRoute path='/snippet' snippets={this.state.snippets} exact={true}
+          <DecisionRoute path='/snippet' getUserData={this.getUserData} snippets={this.state.snippets} exact={true}
           authed={this.state.authed} handleLogout={this.handleLogout} component={MakeSnippet}/>
 
           <DecisionRoute path='/snippet/:id' snippets={this.state.snippets}

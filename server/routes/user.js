@@ -89,8 +89,10 @@ router.put('/snippet', (req, res) => {
     User.update({_id: req.user._id, "snippets.tech": req.body.whichToUpdate}, {$push: {"snippets.$.snipplates": req.body.snippets[0].snipplates[0]}}, (err, docs) => {
         if(err){
             console.log(err)
+            res.status(500).json(err)
         } else{
             console.log(docs)
+            res.status(200).end()
         }
 
     })
@@ -103,9 +105,9 @@ router.delete('/snippet/:id', (req,res ) => {
 
         User.update({_id: req.user._id}, {$set :{ ["snippets." + id + ".snipplates"]: snipplates}}, (err, docs) => {
         if(err){
-            console.log(err)
+            res.status(500).json(err)
         } else{
-            console.log(docs)
+            res.status(200).end()
         }
 
     })
