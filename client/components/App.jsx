@@ -46,7 +46,7 @@ class App extends React.Component {
       if(res.data.user){
         this.setState({
           authed: true
-        })
+        }, )
       }
     }).then(() => this.getUserData())
   }

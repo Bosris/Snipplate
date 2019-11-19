@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 
 export const TrashSpan = styled.span`
-
   &:hover{
     color: red;
     cursor: pointer;

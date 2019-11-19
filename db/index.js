@@ -1,8 +1,11 @@
+require('dotenv').config({path: __dirname + '/../.env'})
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+const path = require('path')
 
-mongoose.connect('mongodb://localhost/snipplate', { useNewUrlParser: true,  useUnifiedTopology: true });
+
+mongoose.connect(`mongodb://${process.env.DB_HOST}/${process.env.DB_DATABASE}`, { useNewUrlParser: true,  useUnifiedTopology: true });
 
 
 let userSchema = mongoose.Schema({

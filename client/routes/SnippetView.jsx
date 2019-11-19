@@ -3,8 +3,11 @@ import Navbar from '../components/Navbar.jsx'
 import Highlight from 'react-highlight'
 import Editor from 'react-simple-code-editor';
 import {Controlled as CodeMirror} from 'react-codemirror2'
-import 'codemirror/lib/codemirror.css';
+
+// import './codemirror.css';
+
 import 'codemirror/theme/material.css';
+
 import 'codemirror/mode/xml/xml';
 import 'codemirror/mode/javascript/javascript';
 import axios from 'axios'
@@ -19,7 +22,6 @@ import {TrashSpan} from './styles.js'
 
 const SnippetView = (props) => {
   const { id } = useParams();
-
 
   const handleDelete = (e, ele, index) => {
     let deleteSnippet = props.snippets[id].snipplates.splice([index], 1);

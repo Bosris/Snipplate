@@ -1,3 +1,4 @@
+require('dotenv').config({path: __dirname + '/../.env'})
 const express = require('express');
 const path = require('path')
 const app = express();
@@ -20,7 +21,7 @@ app.use(session({
   saveUninitialized: true,
   cookie: {secure: false, maxAge: 3600000 },
   // 3600000
-  store: new MongoStore({url: 'mongodb://localhost/snipplate'})
+  store: new MongoStore({url: `mongodb://${process.env.DB_HOST}/${process.env.DB_DATABASE}`})
 }));
 // app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
