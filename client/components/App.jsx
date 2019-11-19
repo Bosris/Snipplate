@@ -35,6 +35,7 @@ class App extends React.Component {
 
   componentDidMount(){
     this.getUser();
+
   }
 
   getUser(){
@@ -107,7 +108,7 @@ class App extends React.Component {
           authed={this.state.authed} handleLogout={this.handleLogout} component={MakeSnippet}/>
 
           <DecisionRoute path='/snippet/:id' snippets={this.state.snippets}
-          authed={this.state.authed} handleLogout={this.handleLogout} getCurrentSnippet={this.getCurrentSnippet} currentSnippet={this.state.currentSnippet} component={SnippetView}/>
+          authed={this.state.authed} getUserData={this.getUserData} handleLogout={this.handleLogout} getCurrentSnippet={this.getCurrentSnippet} currentSnippet={this.state.currentSnippet} component={SnippetView}/>
         {this.state.authed === false ? <Redirect exact from='*' to='/login' /> : <Redirect exact from='/login' to='/' />}
         </Switch>
     )

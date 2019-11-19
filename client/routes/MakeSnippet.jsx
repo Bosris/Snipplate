@@ -27,7 +27,10 @@ const MakeSnippet = (props) => {
         console.log(ele.tech)
         setSnippetNames(prevState => [...prevState, ele.tech])
       })
+
       setWhichToUpdate(props.snippets[0].tech)
+    } else {
+      setTypeOfSnippet("new")
     }
 
   }, [])
@@ -77,11 +80,15 @@ const MakeSnippet = (props) => {
     <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center'}}>
     <h1>Create a Snipplate</h1>
       <form onSubmit={handleSubmit} style={styles.form}>
+{ props.snippets.length > 0 ?
+        <>
         <label>Update a Snipplate or Add New?</label>
         <select onChange={handleTypeOfSnippet}>
           <option value="update" name="update" selected>Update</option>
           <option value="new" name="new">New</option>
-        </select>
+        </select> </>  : ""
+
+  }
 { typeOfSnippet === "new" ?
       <div>
        <label for="tech">Language of snippet: </label>

@@ -18,7 +18,8 @@ app.use(session({
   secret: 'cats',
   resave: true,
   saveUninitialized: true,
-  cookie: {secure: false, maxAge:3600000 },
+  cookie: {secure: false, maxAge: 3600000 },
+  // 3600000
   store: new MongoStore({url: 'mongodb://localhost/snipplate'})
 }));
 // app.use(cookieParser());

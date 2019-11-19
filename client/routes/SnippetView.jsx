@@ -24,11 +24,19 @@ const SnippetView = (props) => {
   const handleDelete = (e, ele, index) => {
     let deleteSnippet = props.snippets[id].snipplates.splice([index], 1);
 
-    let {snipplates} = props.snippets[id]
+    let {snipplates, tech} = props.snippets[id]
 
     // console.log(description)
     axios.delete(`/api/snippet/${id}`, {data: {
-      snipplates
+      snipplates, tech
+      },
+    }).then(res => {
+      if(res.status === 200 && res.data.success === "Deleted Whole Snipplate"){
+        props.getUserData()
+        props.history.push('/')
+      }
+      if(res.status === 200 && res.data.success === "Deleted one snippet"){
+        props.getUserData()
       }
     })
   }

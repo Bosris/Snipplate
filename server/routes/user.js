@@ -14,16 +14,16 @@ router.post('/signup', (req, res) => {
       if (err) {
         console.log('User post err:', err)
        } else if (user) {
-         res.json({ error: 'Sorry, already a user with that email'})
+         res.status(500).json({ error: 'Sorry, already a user with that email'})
 
        } else {
         const createNewUser = new User({
           email, password
         })
         createNewUser.save((err, savedUser) => {
-          if (err) return res.json(err)
+          if (err) return res.status(500).json(err)
 
-          res.json(savedUser)
+          res.status(200).json(savedUser)
         })
        }
     });
@@ -100,17 +100,36 @@ router.put('/snippet', (req, res) => {
 
 router.delete('/snippet/:id', (req,res ) => {
     const { id } = req.params
-    const {snipplates} = req.body
+    const {snipplates, tech} = req.body
     console.log(req.body)
-
+    console.log(snipplates)
+        if(snipplates.length > 0){
         User.update({_id: req.user._id}, {$set :{ ["snippets." + id + ".snipplates"]: snipplates}}, (err, docs) => {
-        if(err){
-            res.status(500).json(err)
-        } else{
-            res.status(200).end()
-        }
+            if(err){
+                res.status(500).json(err)
+            } else{
+                res.status(200).json({success: "Deleted one snippet"})
+            }
 
-    })
+        })
+    } else {
+        User.update({_id: req.user._id}, {$set: { ["snippets." + id]: null }}, (err, result) => {
+            if(err){
+                res.status(500).json(err)
+            } else{
+                User.update({_id: req.user._id}, {$pull: { "snippets": null }}, (err, docs) => {
+                    if(err){
+                        res.status(500).json(err)
+                    } else{
+                        res.status(200).json({success: "Deleted Whole Snipplate"})
+                    }
+
+                })
+            }
+
+        })
+    }
+
     console.log(req.params);
 })
 
@@ -118,4 +137,24 @@ module.exports = router
 
 // ["snippets."+ id + ".snipplates.description"]: description
 
+
+
+// User.update({_id: req.user._id}, {$set: { ["snippets." + id]: null }}, (err, docs) => {
+//     if(err){
+//         console.log(err)
+//     } else{
+//         console.log(docs)
+//     }
+
+// })
+
+
+// User.update({_id: req.user._id}, {$pull: { ["snippets."+ id]: {"tech": tech}} }, {upsert: true, multi: false},  (err, docs) => {
+//     if(err){
+//         console.log(err)
+//     } else{
+//         console.log(docs)
+//     }
+
+// })
 

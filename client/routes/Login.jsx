@@ -43,6 +43,7 @@ const Login = (props) => {
       <label for="password" style={styles.label}>Password:</label>
       <input name="password" onChange={(e) => setPassword(e.target.value)} style={styles.input} type="password" required></input>
       <input style={styles.button} type="submit"></input>
+      <Link to="/signup" style={{ color: 'white', textDecoration: 'none', textAlign: 'center' }} >Signup</Link>
     </form>
     </div>
   </>
@@ -67,7 +68,8 @@ const styles = {
     display: 'inlineBlock',
     fontSize: '14px',
     marginTop: '10px',
-    borderRadius: '20px'
+    borderRadius: '20px',
+    marginBottom: '10px'
   },
   label: {
     marginTop: '10px'
