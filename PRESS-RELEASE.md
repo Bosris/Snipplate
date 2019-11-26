@@ -1,4 +1,4 @@
-# Project Name #
+# Snipplates.io #
 
 <!--
 > This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
@@ -20,11 +20,11 @@ Once the project moves into development, the press release can be used as a touc
   >  Snipplates.io
 
 ## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+  > A tool for developers to store their code snippets in an organized way.
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
-
+  > We developers, It's almost impossible to remember every little command. So instead of slacking your self code snippets to remember. I published an application to help store those code snippets for you!
+<!--
 ## Problem ##
   > Describe the problem your product solves.
 
@@ -42,3 +42,4 @@ Once the project moves into development, the press release can be used as a touc
 
 ## Closing and Call to Action ##
   > Wrap it up and give pointers where the reader should go next.
+ -->
